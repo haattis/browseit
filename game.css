@@ -26,7 +26,7 @@
   margin-top: 8px;
 }
 
-#loading {
+.loading {
   width: 15%;
   text-align: center;
   position: absolute;
@@ -194,7 +194,7 @@
   text-align: center;
   position: absolute;
   left: 50%;
-  transform:translate(-50%, 0);
+  transform: translate(-50%, 0);
 }
 
 #bestHighScore {
@@ -281,4 +281,59 @@ i {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
+}
+
+#highscoresTitle {
+  margin-bottom: 30px;
+}
+
+#highscoresTable {
+  font-size: 11pt;
+  width: 100%;
+}
+
+#highscoresTable thead {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+}
+
+#highscoresTable tbody {
+  width: 100%;
+  display: block;
+  height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#highscoresTable th,
+#highscoresTable td {
+  padding: 5px 0;
+}
+
+#highscoresTable .highscoresTableRank {
+  text-align: center;
+  width: 40px;
+  padding: 0 15px;
+}
+
+#highscoresTable .highscoresTableName {
+  text-align: left;
+  width: 100%;
+}
+
+#highscoresTable .highscoresTableScore {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.highscoresTableRowGrey {
+  background-color: lightgray;
+}
+
+#backButton {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 20px;
 }

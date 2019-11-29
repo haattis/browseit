@@ -9,6 +9,7 @@ var highScore = 0;
 var currentName;
 var wrongLetters = [];
 var correctLetters = [];
+var highscores = [];
 
 var initGame = function() {
   resetGame();
@@ -200,6 +201,16 @@ $("#retryButton").click(function(e) {
   isPlaying = true;
 });
 
+$("#highscoreButton").click(function(e) {
+  showHighscores();
+  isPlaying = false;
+  loadHighscores();
+});
+
+$("#backButton").click(function(e) {
+  showMenu();
+});
+
 $("#quitButton").click(function(e) {
   event.preventDefault();
   $("#game").hide();
@@ -290,35 +301,86 @@ var loadNames = function() {
       employeesLeft = result;
       $("#loading").hide();
       $("#loadingFinished").show();
-      $("#loadingError").hide();
     })
     .catch(e => {
       $("#loading").hide();
-      $("#loadingFinished").hide();
       $("#loadingError").show();
       $("#loadingError").html(
         "Feil ved innlasting av spill. Sørg for at du er logget inn på projects.knowit.no, og last inn spillet på nytt."
       );
     });
 };
+var loadHighscores = function() {
+  $("#highscoresLoading").show();
+  $("#highscoresLoadingFinished").hide();
+  $("#highscoresLoadingError").hide();
+
+  getHighscores()
+    .then(result => {
+      console.log("finished loading highscores");
+      highscores = result;
+
+      var htmlRows = "";
+      result.forEach(function(item) {
+        let itemIndex = result.findIndex(x => x.name === item.name) + 1;
+        htmlRows = htmlRows + "<tr";
+        if (itemIndex % 2 === 0) {
+          htmlRows = htmlRows + ' class="highscoresTableRowGrey"';
+        }
+        htmlRows = htmlRows + ">";
+
+        htmlRows =
+          htmlRows +
+          '<td class="highscoresTableRank">' +
+          itemIndex +
+          '</td><td class="highscoresTableName">' +
+          item.name +
+          '</td><td class="highscoresTableScore">' +
+          item.highscore +
+          "</th></tr>";
+      });
+
+      $("#highscoresLoading").hide();
+      $("#highscoresLoadingFinished").show();
+      $("#highscoresTableInner").html(htmlRows);
+    })
+    .catch(e => {
+      $("#highscoresLoading").hide();
+      $("#highscoresLoadingError").show();
+      $("#loadingError").html(
+        "Feil ved innlasting av highscores.\n\nFeilmelding:\n" + e
+      );
+    });
+};
+
 var showMenu = function() {
   $("#menu").show();
   $("#play").hide();
   $("#finish").hide();
+  $("#highscores").hide();
 };
 var showPlay = function() {
   $("#menu").hide();
   $("#play").show();
   $("#finish").hide();
   $("#play").focus();
+  $("#highscores").hide();
 };
 var showFinish = function() {
   $("#menu").hide();
   $("#play").hide();
   $("#finish").show();
+  $("#highscores").hide();
+};
+var showHighscores = function() {
+  $("#menu").hide();
+  $("#play").hide();
+  $("#finish").hide();
+  $("#highscores").show();
 };
 var hideAll = function() {
   $("#menu").hide();
   $("#play").hide();
   $("#finish").hide();
+  $("#highscores").hide();
 };
