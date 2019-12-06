@@ -299,6 +299,11 @@ var renderFinish = function(win) {
   } else {
     $("#finishTitle").html("Du tapte!");
   }
+  if (score === 0) {
+    $("#submitHighscorePageButton").hide();
+  } else {
+    $("#submitHighscorePageButton").show();
+  }
   $("#score").html(score + " av " + employees.length);
   $("#scoreToSubmit").html(score + " av " + employees.length);
   $("#highScore").html("Din rekord: " + highScore);
