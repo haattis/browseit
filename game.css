@@ -266,6 +266,14 @@
   transform: translate(-50%, 0);
 }
 
+#highscoreUsername {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: solid #808080 1px;
+  border-radius: 3px;
+}
+
 /* Button styling */
 
 i {
