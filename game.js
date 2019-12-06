@@ -304,9 +304,7 @@ var renderFinish = function (win) {
 };
 
 var renderHighscores = function (highscores) {
-  console.log("fourth");
   var htmlRows = "";
-  console.log(highscores);
   for (var i = 0; i < highscores.length; i++) {
     let item = highscores[i];
     let itemIndex = highscores.findIndex(x => x.name === item.name) + 1;
@@ -372,7 +370,6 @@ var submitHighscore = function () {
 
   getHighscores()
     .then(async result => {
-      console.log("first");
       var h = [];
       var playerName = $("#highscoreUsername")[0].value;
 
@@ -385,13 +382,11 @@ var submitHighscore = function () {
 
         if (newEntry) {
           h = await setHighscore(playerName, score).then(success => {
-            console.log("second");
             if (success) {
               let i = result.indexOf(player, 0);
               result.splice(i, i, { name: playerName, highscore: score });
               result.sort((a, b) => (a.highscore < b.highscore ? 1 : -1));
 
-              console.log(result);
               return result;
             }
           });
@@ -399,12 +394,9 @@ var submitHighscore = function () {
       } else {
         h = result;
       }
-      console.log(h);
       return h;
     })
     .then(result => {
-      console.log("third");
-      console.log(result);
       renderHighscores(result);
       $("#highscoresLoading").hide();
       $("#highscoresLoadingFinished").show();
