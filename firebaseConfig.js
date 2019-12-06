@@ -12,13 +12,13 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var database = firebase.firestore();
 
-var getHighscores = async function() {
+var getHighscores = async function () {
   let data = await database
     .collection("highscores")
     .get()
-    .then(function(querySnapshot) {
+    .then(function (querySnapshot) {
       let result = [];
-      querySnapshot.forEach(function(doc) {
+      querySnapshot.forEach(function (doc) {
         result.push({
           name: doc.id,
           highscore: doc.data().highscore
@@ -33,4 +33,4 @@ var getHighscores = async function() {
   return data;
 };
 
-var setHighscore = async function(name, highscore) {};
+var setHighscore = async function (name, highscore) { };

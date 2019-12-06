@@ -208,6 +208,55 @@
   padding-bottom: 10px;
 }
 
+/* HighScore */
+
+#highscoresTitle {
+  margin-bottom: 15px;
+}
+
+#highscoresTable {
+  display: grid;
+  margin-bottom: 15px;
+  font-size: 11pt;
+  max-height: 240px;
+  overflow-y: auto;
+  border-collapse: collapse;
+  min-width: 100%;
+  grid-template-columns:
+    minmax(30px, 50px)
+    minmax(150px, 4fr)
+    minmax(150px, 2fr);
+}
+
+#highscoresTable tr, #highscoresTable thead, #highscoresTable tbody {
+  display: contents;
+}
+
+#highscoresTable th, #highscoresTable td {
+  padding: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#highscoresTable th {
+  position: sticky;
+  top: 0;
+  background: #0b5c9a;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1.1rem;
+  color: white;
+}
+
+#highscoresTable td {
+  color: #808080;
+}
+
+#highscoresTable tr:nth-child(even) td {
+  background: #f1f9ff;
+}
+
 /* Button styling */
 
 i {
@@ -255,7 +304,7 @@ i {
 
 .gameButton.blue {
   background: #0b5c9a;
-  box-shadow: -1.2px -0.9px 0 0.8px rgb(16, 66, 112) inset;
+  box-shadow: -1.2px -0.9px 0 0.8px #104270 inset;
 }
 
 .gameButton:hover {
@@ -283,57 +332,4 @@ i {
   transform: translate(-50%);
 }
 
-#highscoresTitle {
-  margin-bottom: 30px;
-}
 
-#highscoresTable {
-  font-size: 11pt;
-  width: 100%;
-}
-
-#highscoresTable thead {
-  display: block;
-  width: 100%;
-  border-bottom: 1px solid lightgray;
-  margin-bottom: 10px;
-}
-
-#highscoresTable tbody {
-  width: 100%;
-  display: block;
-  height: 200px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-#highscoresTable th,
-#highscoresTable td {
-  padding: 5px 0;
-}
-
-#highscoresTable .highscoresTableRank {
-  text-align: center;
-  width: 40px;
-  padding: 0 15px;
-}
-
-#highscoresTable .highscoresTableName {
-  text-align: left;
-  width: 100%;
-}
-
-#highscoresTable .highscoresTableScore {
-  text-align: center;
-  padding: 0 15px;
-}
-
-.highscoresTableRowGrey {
-  background-color: lightgray;
-}
-
-#backButton {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 20px;
-}
