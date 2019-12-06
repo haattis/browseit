@@ -228,11 +228,14 @@
     minmax(150px, 2fr);
 }
 
-#highscoresTable tr, #highscoresTable thead, #highscoresTable tbody {
+#highscoresTable tr,
+#highscoresTable thead,
+#highscoresTable tbody {
   display: contents;
 }
 
-#highscoresTable th, #highscoresTable td {
+#highscoresTable th,
+#highscoresTable td {
   padding: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -255,6 +258,10 @@
 
 #highscoresTable tr:nth-child(even) td {
   background: #f1f9ff;
+}
+
+#highscoresTable tr td.highlighted {
+  background: #f2f4d8;
 }
 
 /* SubmitHighscore */
@@ -348,5 +355,3 @@ i {
   left: 50%;
   transform: translate(-50%);
 }
-
-
