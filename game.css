@@ -261,7 +261,8 @@
 }
 
 #highscoresTable tr td.highlighted {
-  background: #f2f4d8;
+  background: #48b0ff;
+  color: #0b0b0b;
 }
 
 /* SubmitHighscore */

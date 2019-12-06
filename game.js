@@ -330,6 +330,14 @@ var renderHighscores = function(highscores) {
   $("#highscoresTableInner").html(htmlRows);
 };
 
+var renderHighscoreLoadingError = function(e) {
+  $("#highscoresLoading").hide();
+  $("#highscoresLoadingError").show();
+  $("#loadingError").html(
+    "Feil ved innlasting av highscores.\n\nFeilmelding:\n" + e
+  );
+};
+
 var loadNames = function() {
   $("#loading").show();
   $("#loadingFinished").hide();
@@ -361,11 +369,7 @@ var loadHighscores = function() {
       $("#highscoresLoadingFinished").show();
     })
     .catch(e => {
-      $("#highscoresLoading").hide();
-      $("#highscoresLoadingError").show();
-      $("#loadingError").html(
-        "Feil ved innlasting av highscores.\n\nFeilmelding:\n" + e
-      );
+      renderHighscoreLoadingError(e);
     });
 };
 
@@ -377,7 +381,7 @@ var submitHighscore = function() {
 
   getHighscores()
     .then(async result => {
-      var h = [];
+      var h = result;
       lastHighscoreName = $("#highscoreUsername")[0].value;
 
       if (score > 0 && lastHighscoreName.length > 0) {
@@ -396,13 +400,10 @@ var submitHighscore = function() {
                 highscore: score
               });
               result.sort((a, b) => (a.highscore < b.highscore ? 1 : -1));
-
               return result;
             }
           });
         }
-      } else {
-        h = result;
       }
       return h;
     })
@@ -410,16 +411,10 @@ var submitHighscore = function() {
       renderHighscores(result);
       $("#highscoresLoading").hide();
       $("#highscoresLoadingFinished").show();
-      //location.href = `#${lastHighscoreName}`;
-      let rowpos = $("#" + lastHighscoreName).position();
       $("#highscoresTable").scrollTop(70);
     })
     .catch(e => {
-      $("#highscoresLoading").hide();
-      $("#highscoresLoadingError").show();
-      $("#loadingError").html(
-        "Feil ved innlasting av highscores.\n\nFeilmelding:\n" + e
-      );
+      renderHighscoreLoadingError(e);
     });
 };
 
