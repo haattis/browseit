@@ -33,4 +33,11 @@ var getHighscores = async function () {
   return data;
 };
 
-var setHighscore = async function (name, highscore) { };
+var setHighscore = async function (name, highscore) {
+  var success = await database.collection("highscores").doc(name).set({
+    highscore: highscore
+  })
+    .then(() => success = true)
+    .catch(() => success = false)
+  return success
+};

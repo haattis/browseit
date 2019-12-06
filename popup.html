@@ -87,16 +87,38 @@
                 <h1 id="finishTitle"></h1>
               </div>
                 <div class="section">
-                    <h2>Poengsum:</h2>
+                  <h2>Poengsum:</h2>
                 </div>
                 <div class="section">
-                    <h3 id="score"></h3>
+                  <h3 id="score"></h3>
                 </div>
                 <div class="section">
-                    <h3 id="highScore"></h3>
+                  <h3 id="highScore"></h3>
                 </div>
+                <button class="gameButton green" id="submitHighscorePageButton">Registrer poengsum</button>
                 <button class="gameButton blue" id="retryButton">Prøv igjen</button>
                 <button class="gameButton red" id="quitButton">Avslutt</button>
+            </div>
+
+            <div id="submitHighscore">
+              <div class="section">
+                <h1>Registrer highscore</h1>
+              </div>
+              <div class="section">
+                <h2>Poengsum:</h2>
+              </div>
+              <div class="section">
+                <h3 id="scoreToSubmit"></h3>
+              </div>
+              <div class="section">
+                <input id="highscoreUsername" placeholder="navn" />
+              </div>
+              <div class="section">
+                <button id="returnFromHighscoreButton" class="gameButton blue">Tilbake</button>
+                <button id="submitHighscoreButton" class="gameButton green">Registrer</button>
+              </div>
+              
+
             </div>
 
             <div id="highscores">
