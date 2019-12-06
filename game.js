@@ -9,7 +9,7 @@ var highScore = 0;
 var currentName;
 var wrongLetters = [];
 var correctLetters = [];
-var lastHighscoreName = "";
+var username = "";
 
 var initGame = function() {
   resetGame();
@@ -209,7 +209,7 @@ $("#highscoreButton").click(function(e) {
 
 $("#submitHighscorePageButton").click(function(e) {
   showSubmitHighscore();
-  $("#highscoreUsername").html(lastHighscoreName);
+  $("#highscoreUsername").html(username);
 });
 
 $("#submitHighscoreButton").click(function(e) {
@@ -316,7 +316,7 @@ var renderHighscores = function(highscores) {
     let item = highscores[i];
     let itemIndex = highscores.findIndex(x => x.name === item.name) + 1;
 
-    let isHighlighted = item.name === lastHighscoreName ? "highlighted" : "";
+    let isHighlighted = item.name === username ? "highlighted" : "";
 
     htmlRows =
       htmlRows +
@@ -387,19 +387,19 @@ var submitHighscore = function() {
   getHighscores()
     .then(async result => {
       var h = result;
-      if (score > 0 && lastHighscoreName.length > 0) {
+      if (score > 0 && username.length > 0) {
         var newEntry = true;
-        var player = result.find(p => p.name === lastHighscoreName);
+        var player = result.find(p => p.name === username);
         if (player) {
           newEntry = player.highscore < score;
         }
 
         if (newEntry) {
-          h = await setHighscore(lastHighscoreName, score).then(success => {
+          h = await setHighscore(username, score).then(success => {
             if (success) {
               let i = result.indexOf(player, 0);
               result.splice(i, i, {
-                name: lastHighscoreName,
+                name: username,
                 highscore: score
               });
               result.sort((a, b) => (a.highscore < b.highscore ? 1 : -1));
@@ -414,7 +414,13 @@ var submitHighscore = function() {
       renderHighscores(result);
       $("#highscoresLoading").hide();
       $("#highscoresLoadingFinished").show();
-      $("#highscoresTable").scrollTop(70);
+
+      let i = result.indexOf(
+        result.find(p => p.name === username),
+        0
+      );
+      var rowHeight = $(`#highscoresTableInner td`).height();
+      $(`#highscoresTable`).scrollTop(i * rowHeight + 70);
     })
     .catch(e => {
       renderHighscoreLoadingError(e);
