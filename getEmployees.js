@@ -1,4 +1,4 @@
-var getEmployees = async function() {
+var getEmployeesAndUser = async function () {
   let data = await fetch(
     "https://projects.knowit.no/pages/viewpage.action?pageId=55805057",
     { credentials: "include", sameSite: false }
@@ -16,7 +16,7 @@ var getEmployees = async function() {
       var parser = new DOMParser();
       var doc = parser.parseFromString(html, "text/html");
       var employees = Array.from(doc.querySelectorAll("tr")).slice(1);
-      employees.forEach(function(person) {
+      employees.forEach(function (person) {
         const name = person.querySelector(".confluence-userlink");
         const img = person.querySelector(".confluence-embedded-image");
         if (name && img) {
@@ -30,6 +30,8 @@ var getEmployees = async function() {
           result.push({ name: name.innerText, img: imgUrl });
         }
       });
+      var user = doc.querySelector("#user-menu-link").getAttribute("title");
+      $("#highscoreUsername").attr("value", user);
       return result;
     })
     .catch(e => {

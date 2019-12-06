@@ -312,7 +312,7 @@ var loadNames = function () {
   $("#loading").show();
   $("#loadingFinished").hide();
   $("#loadingError").hide();
-  getEmployees()
+  getEmployeesAndUser()
     .then(result => {
       employees = result;
       employeesLeft = result;
