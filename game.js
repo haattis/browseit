@@ -338,6 +338,14 @@ var renderHighscoreLoadingError = function(e) {
   );
 };
 
+var renderLoadingError = function(e) {
+  $("#loading").hide();
+  $("#loadingError").show();
+  $("#loadingError").html(
+    "Feil ved innlasting av spill. Sørg for at du er logget inn på projects.knowit.no, og last inn spillet på nytt."
+  );
+};
+
 var loadNames = function() {
   $("#loading").show();
   $("#loadingFinished").hide();
@@ -350,11 +358,7 @@ var loadNames = function() {
       $("#loadingFinished").show();
     })
     .catch(e => {
-      $("#loading").hide();
-      $("#loadingError").show();
-      $("#loadingError").html(
-        "Feil ved innlasting av spill. Sørg for at du er logget inn på projects.knowit.no, og last inn spillet på nytt."
-      );
+      renderLoadingError(e);
     });
 };
 var loadHighscores = function() {
