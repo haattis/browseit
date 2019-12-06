@@ -28,13 +28,13 @@
         </div>
         <div id="gameMain">
             <div id="menu">
-              <div id="loading">
+              <div id="loading" class="loading">
                 Laster inn
                   <div class="loader"></div>
               </div>
               <div id="loadingFinished">
                   <div id="instructions" class="section">
-                      <h2>Velkommen til KnowIts navnespill!</h2>
+                      <h2>Velkommen til Knowits navnespill!</h2>
                       <h3>Instruksjoner:</h3>
                       <p>Gjett navnet til den ansatte som vises på bildet ved å trykke inn én bokstav av gangen på tastaturet. <br/><br/>
                         Strekene nederst på siden viser hvor mange bokstaver som er i navnet, og bokstavene du har gjettet feil vises til venstre på skjermen. <br/><br/>
@@ -45,7 +45,7 @@
                   <div class="section">
                       <h3 id="bestHighScore"></h3>
                   </div>
-                  <button class="gameButton green" id="playButton">Start spill</button>
+                  <button class="gameButton green" id="playButton">Start spill</button><button class="gameButton" id="highscoreButton">Highscores</button>
                 </div>
               <div id="loadingError">
 
@@ -87,16 +87,68 @@
                 <h1 id="finishTitle"></h1>
               </div>
                 <div class="section">
-                    <h2>Poengsum:</h2>
+                  <h2>Poengsum:</h2>
                 </div>
                 <div class="section">
-                    <h3 id="score"></h3>
+                  <h3 id="score"></h3>
                 </div>
                 <div class="section">
-                    <h3 id="highScore"></h3>
+                  <h3 id="highScore"></h3>
                 </div>
+                <button class="gameButton green" id="submitHighscorePageButton">Registrer poengsum</button>
                 <button class="gameButton blue" id="retryButton">Prøv igjen</button>
                 <button class="gameButton red" id="quitButton">Avslutt</button>
+            </div>
+
+            <div id="submitHighscore">
+              <div class="section">
+                <h1>Registrer highscore</h1>
+              </div>
+              <div class="section">
+                <h2>Poengsum:</h2>
+              </div>
+              <div class="section">
+                <h3 id="scoreToSubmit"></h3>
+              </div>
+              <div class="section">
+                <input id="highscoreUsername" placeholder="navn" />
+              </div>
+              <div class="section">
+                <button id="returnFromHighscoreButton" class="gameButton blue">Tilbake</button>
+                <button id="submitHighscoreButton" class="gameButton green">Registrer</button>
+              </div>
+              
+
+            </div>
+
+            <div id="highscores">
+              <div class="section">
+                <h1 id="highscoresTitle">Highscores</h1>
+              </div>
+              <div class="section">
+                <div id="highscoresLoading" class="loading">
+                    Laster inn
+                    <div class="loader"></div>
+                </div>
+
+                <div id="highscoresLoadingFinished">
+                  <table id="highscoresTable" cellpadding="0" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th class="highscoresTableRank">#</th>
+                        <th class="highscoresTableName">Navn</th>
+                        <th class="highscoresTableScore">Poengsum</th>
+                      </tr>
+                    </thead>
+                    <tbody id="highscoresTableInner"></tbody>
+                  </table>
+                  <div class="section">
+                      <button class="gameButton blue" id="backButton">Tilbake</button>
+                  </div>
+                </div>
+
+                <div id="highscoresLoadingError"></div>
+              </div>
             </div>
         </div>
       </div>
@@ -384,6 +436,13 @@
     <div id="leftblock"></div>
     <div id="rightblock"></div>
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+
+    <script src="firebaseConfig.js" type="text/javascript"></script>
     <script src="getEmployees.js" type="text/javascript"></script>
     <script src="game.js" type="text/javascript"></script>
     <script src="popup.js" type="text/javascript"></script>

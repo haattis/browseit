@@ -9,14 +9,15 @@ var highScore = 0;
 var currentName;
 var wrongLetters = [];
 var correctLetters = [];
+var highscores = [];
 
-var initGame = function() {
+var initGame = function () {
   resetGame();
   changePerson();
   renderGameState();
 };
 
-var changePerson = function() {
+var changePerson = function () {
   wrongLetters = [];
   correctLetters = [];
   let person = employeesLeft.splice(
@@ -46,12 +47,12 @@ var changePerson = function() {
     }
     return `<div class="${className}"><div class="${
       hidden ? "hidden" : ""
-    } letter ${id ? id : ""}">${letter.toUpperCase()}</div></div>`;
+      } letter ${id ? id : ""}">${letter.toUpperCase()}</div></div>`;
   });
   $("#nameSection").append(letters);
 };
 
-var normalizeLetters = function(letters) {
+var normalizeLetters = function (letters) {
   return letters
     .normalize("NFD")
     .replace(/(a)([\u0300-\u036f])/g, "å")
@@ -59,15 +60,15 @@ var normalizeLetters = function(letters) {
     .replace(/[\u0300-\u036f]/g, "");
 };
 
-var incrementScore = function() {
+var incrementScore = function () {
   score += 1;
 };
 
-var decrementLives = function() {
+var decrementLives = function () {
   lives -= 1;
 };
 
-var resetGame = function() {
+var resetGame = function () {
   score = 0;
   lives = 15;
   employeesLeft = employees.slice();
@@ -76,7 +77,7 @@ var resetGame = function() {
   resetGameRender();
 };
 
-var checkLetter = function(letter) {
+var checkLetter = function (letter) {
   if (correctLetters.includes(letter) || wrongLetters.includes(letter)) {
     scaleLetter(letter);
     return;
@@ -94,12 +95,12 @@ var checkLetter = function(letter) {
   return;
 };
 
-var updateGameState = function() {
+var updateGameState = function () {
   if (lives <= 0) {
     $("#endButton").removeClass("red");
     acceptInput = false;
     showWrongName();
-    setTimeout(function() {
+    setTimeout(function () {
       gameOver();
       acceptInput = true;
       $("#endButton").addClass("red");
@@ -137,37 +138,37 @@ var updateGameState = function() {
 };
 
 // Game navigation
-var roundWin = function() {
+var roundWin = function () {
   resetGameRender();
   changePerson();
 };
 
-var gameOver = function() {
+var gameOver = function () {
   showFinish();
   checkIfNewHighScore();
   isPlaying = false;
   renderFinish(false);
 };
 
-var gameWin = function() {
+var gameWin = function () {
   showFinish();
   checkIfNewHighScore();
   isPlaying = false;
   renderFinish(true);
 };
 
-var enterGame = function() {
+var enterGame = function () {
   showMenu();
   getLocalHighScore();
   loadNames();
 };
 
-var exitGame = function() {
+var exitGame = function () {
   hideAll();
 };
 
 // Event listener
-$(document).on("keypress", window, function(e) {
+$(document).on("keypress", window, function (e) {
   if (acceptInput) {
     const key = e.key.toLowerCase();
     if (
@@ -181,26 +182,52 @@ $(document).on("keypress", window, function(e) {
   }
 });
 
-$("#playButton").click(function(e) {
+$("#playButton").click(function (e) {
   showPlay();
   initGame();
   isPlaying = true;
 });
 
-$("#endButton").click(function(e) {
+$("#endButton").click(function (e) {
   if (acceptInput) {
     isPlaying = false;
     gameOver();
   }
 });
 
-$("#retryButton").click(function(e) {
+$("#retryButton").click(function (e) {
   initGame();
   showPlay();
   isPlaying = true;
 });
 
-$("#quitButton").click(function(e) {
+$("#highscoreButton").click(function (e) {
+  showHighscores();
+  isPlaying = false;
+  loadHighscores();
+});
+
+$("#submitHighscorePageButton").click(function (e) {
+  showSubmitHighscore();
+
+})
+
+$("#submitHighscoreButton").click(function (e) {
+  var playerName = $("#highscoreUsername")[0].value;
+  setHighscore(playerName, score);
+  showHighscores();
+  loadHighscores();
+});
+
+$("#returnFromHighscoreButton").click(function (e) {
+  showFinish();
+});
+
+$("#backButton").click(function (e) {
+  showMenu();
+});
+
+$("#quitButton").click(function (e) {
   event.preventDefault();
   $("#game").hide();
   $("#home").show();
@@ -209,7 +236,7 @@ $("#quitButton").click(function(e) {
 });
 
 // Local Storage
-var getLocalHighScore = function() {
+var getLocalHighScore = function () {
   highScore = localStorage.getItem("browseItNameGameScore");
   if (highScore == null) {
     highScore = 0;
@@ -219,7 +246,7 @@ var getLocalHighScore = function() {
   }
 };
 
-var checkIfNewHighScore = function() {
+var checkIfNewHighScore = function () {
   if (score > highScore) {
     highScore = score;
     localStorage.setItem("browseItNameGameScore", score);
@@ -227,60 +254,61 @@ var checkIfNewHighScore = function() {
 };
 
 // Render functions
-var showWrongLetter = function(letter) {
+var showWrongLetter = function (letter) {
   $("#alphabet").append(
     `<div class="letterContainer wrong"><div class="letter ${letter}">${letter.toUpperCase()}</div></div>`
   );
 };
 
-var showCorrectLetter = function(letter) {
+var showCorrectLetter = function (letter) {
   $(`.letter.${letter.toLowerCase()}`).removeClass("hidden");
 };
 
-var showCorrectName = function() {
+var showCorrectName = function () {
   $("#nameSection .letterContainer").addClass("isCorrectName");
   $("#nameSection .letterContainer").addClass("no-underline");
 };
 
-var showWrongName = function() {
+var showWrongName = function () {
   $(".letter.hidden").css("font-weight", "bold");
   $(`.letter.hidden`).addClass("isWrongName");
   $(`.letter.hidden`).removeClass("hidden");
   $("#nameSection .letterContainer").addClass("no-underline");
 };
 
-var scaleLetter = function(letter) {
+var scaleLetter = function (letter) {
   $(`.${letter}`).addClass("letter-scale");
-  setTimeout(function() {
+  setTimeout(function () {
     $(`.${letter}`).removeClass("letter-scale");
   }, 200);
 };
 
-var resetGameRender = function() {
+var resetGameRender = function () {
   $("#nameSection").empty();
   $("#alphabet").empty();
 };
 
-var resetImageRender = function() {
+var resetImageRender = function () {
   $("#personImage").attr("src", "");
 };
 
-var renderGameState = function() {
+var renderGameState = function () {
   $("#scoreLabel").html("Poeng: " + score);
   $("#livesLabel").html("Antall liv: " + lives);
 };
 
-var renderFinish = function(win) {
+var renderFinish = function (win) {
   if (win) {
     $("#finishTitle").html("Gratulerer, du vant!");
   } else {
     $("#finishTitle").html("Du tapte!");
   }
   $("#score").html(score + " av " + employees.length);
+  $("#scoreToSubmit").html(score + " av " + employees.length);
   $("#highScore").html("Din rekord: " + highScore);
 };
 
-var loadNames = function() {
+var loadNames = function () {
   $("#loading").show();
   $("#loadingFinished").hide();
   $("#loadingError").hide();
@@ -290,35 +318,98 @@ var loadNames = function() {
       employeesLeft = result;
       $("#loading").hide();
       $("#loadingFinished").show();
-      $("#loadingError").hide();
     })
     .catch(e => {
       $("#loading").hide();
-      $("#loadingFinished").hide();
       $("#loadingError").show();
       $("#loadingError").html(
         "Feil ved innlasting av spill. Sørg for at du er logget inn på projects.knowit.no, og last inn spillet på nytt."
       );
     });
 };
-var showMenu = function() {
+var loadHighscores = function () {
+  $("#highscoresLoading").show();
+  $("#highscoresLoadingFinished").hide();
+  $("#highscoresLoadingError").hide();
+
+  getHighscores()
+    .then(result => {
+      console.log("finished loading highscores");
+      highscores = result;
+
+      var htmlRows = "";
+      result.forEach(function (item) {
+        let itemIndex = result.findIndex(x => x.name === item.name) + 1;
+        htmlRows = htmlRows + "<tr";
+        if (itemIndex % 2 === 0) {
+          htmlRows = htmlRows + ' class="highscoresTableRowGrey"';
+        }
+        htmlRows = htmlRows + ">";
+
+        htmlRows =
+          htmlRows +
+          '<td class="highscoresTableRank">' +
+          itemIndex +
+          '</td><td class="highscoresTableName">' +
+          item.name +
+          '</td><td class="highscoresTableScore">' +
+          item.highscore +
+          "</th></tr>";
+      });
+
+      $("#highscoresLoading").hide();
+      $("#highscoresLoadingFinished").show();
+      $("#highscoresTableInner").html(htmlRows);
+    })
+    .catch(e => {
+      $("#highscoresLoading").hide();
+      $("#highscoresLoadingError").show();
+      $("#loadingError").html(
+        "Feil ved innlasting av highscores.\n\nFeilmelding:\n" + e
+      );
+    });
+};
+
+var showMenu = function () {
   $("#menu").show();
   $("#play").hide();
   $("#finish").hide();
+  $("#highscores").hide();
+  $("#submitHighscore").hide();
 };
-var showPlay = function() {
+var showPlay = function () {
   $("#menu").hide();
   $("#play").show();
   $("#finish").hide();
   $("#play").focus();
+  $("#highscores").hide();
+  $("#submitHighscore").hide();
 };
-var showFinish = function() {
+var showFinish = function () {
   $("#menu").hide();
   $("#play").hide();
   $("#finish").show();
+  $("#highscores").hide();
+  $("#submitHighscore").hide();
 };
-var hideAll = function() {
+var showHighscores = function () {
   $("#menu").hide();
   $("#play").hide();
   $("#finish").hide();
+  $("#highscores").show();
+  $("#submitHighscore").hide();
+};
+var showSubmitHighscore = function () {
+  $("#menu").hide();
+  $("#play").hide();
+  $("#finish").hide();
+  $("#highscores").hide();
+  $("#submitHighscore").show();
+};
+var hideAll = function () {
+  $("#menu").hide();
+  $("#play").hide();
+  $("#finish").hide();
+  $("#highscores").hide();
+  $("#submitHighscore").hide();
 };

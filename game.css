@@ -26,7 +26,7 @@
   margin-top: 8px;
 }
 
-#loading {
+.loading {
   width: 15%;
   text-align: center;
   position: absolute;
@@ -194,7 +194,7 @@
   text-align: center;
   position: absolute;
   left: 50%;
-  transform:translate(-50%, 0);
+  transform: translate(-50%, 0);
 }
 
 #bestHighScore {
@@ -206,6 +206,64 @@
 }
 #highScore {
   padding-bottom: 10px;
+}
+
+/* HighScore */
+
+#highscoresTitle {
+  margin-bottom: 15px;
+}
+
+#highscoresTable {
+  display: grid;
+  margin-bottom: 15px;
+  font-size: 11pt;
+  max-height: 240px;
+  overflow-y: auto;
+  border-collapse: collapse;
+  min-width: 100%;
+  grid-template-columns:
+    minmax(30px, 50px)
+    minmax(150px, 4fr)
+    minmax(150px, 2fr);
+}
+
+#highscoresTable tr, #highscoresTable thead, #highscoresTable tbody {
+  display: contents;
+}
+
+#highscoresTable th, #highscoresTable td {
+  padding: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#highscoresTable th {
+  position: sticky;
+  top: 0;
+  background: #0b5c9a;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1.1rem;
+  color: white;
+}
+
+#highscoresTable td {
+  color: #808080;
+}
+
+#highscoresTable tr:nth-child(even) td {
+  background: #f1f9ff;
+}
+
+/* SubmitHighscore */
+
+#submitHighscore {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 /* Button styling */
@@ -255,7 +313,7 @@ i {
 
 .gameButton.blue {
   background: #0b5c9a;
-  box-shadow: -1.2px -0.9px 0 0.8px rgb(16, 66, 112) inset;
+  box-shadow: -1.2px -0.9px 0 0.8px #104270 inset;
 }
 
 .gameButton:hover {
@@ -282,3 +340,5 @@ i {
   left: 50%;
   transform: translate(-50%);
 }
+
+
