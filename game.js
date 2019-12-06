@@ -209,6 +209,7 @@ $("#highscoreButton").click(function(e) {
 
 $("#submitHighscorePageButton").click(function(e) {
   showSubmitHighscore();
+  $("#highscoreUsername").html(lastHighscoreName);
 });
 
 $("#submitHighscoreButton").click(function(e) {
@@ -386,8 +387,6 @@ var submitHighscore = function() {
   getHighscores()
     .then(async result => {
       var h = result;
-      lastHighscoreName = $("#highscoreUsername")[0].value;
-
       if (score > 0 && lastHighscoreName.length > 0) {
         var newEntry = true;
         var player = result.find(p => p.name === lastHighscoreName);

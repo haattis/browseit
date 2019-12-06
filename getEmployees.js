@@ -31,7 +31,7 @@ var getEmployeesAndUser = async function() {
         }
       });
       var user = doc.querySelector("#user-menu-link").getAttribute("title");
-      $("#highscoreUsername").attr("value", user);
+      lastHighscoreName = user;
       return result;
     })
     .catch(e => {
